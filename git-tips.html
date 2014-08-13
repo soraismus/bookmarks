@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+  <title>Git tips from the trenches</title>
+
+  <meta name="author" content="Csaba Okrona" />
+  
+    
+      <meta name="description" content="Get better at git with some pro tips. Learn these tricks and rock your daily vcs routine! git learn git git tips git howto git branch git diff" />
+    
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="alternate" type="application/rss+xml" href="http://feeds.feedburner.com/ochronus_online" />
+
+<link rel='stylesheet' type='text/css' href='https://ochronus.com/bundles/4dbe86cd308e607066eff798895e1ad5.css' />
+
+
+  <!--[if lt IE 9]>
+  -http://html5shim.googlecode.com/svn/trunk/html5.js
+  <![endif]-->
+
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="apple-touch-icon-144x144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="apple-touch-icon-114x114-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="apple-touch-icon-72x72-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-57x57-precomposed.png">
+  <link rel="shortcut icon" href="https://ochronus.com/images/zen_circle.jpg">
+  <link rel="author" href="https://plus.google.com/104319029501878849601/"/>
+ 	<meta property="og:type" content="article" />	<meta property="og:title" content="Git tips from the trenches" /> 	<meta property="og:site_name" content="Ochronus" /> 	<meta property="og:url" content="https://ochronus.com/git-tips-from-the-trenches/" />        <link rel="canonical" href="https://ochronus.com/git-tips-from-the-trenches/" />     	<meta property="article:published_time" content="2014-02-01T00:00:00+01:00" />	<meta property="og:image" content="https://ochronus.com/images/git-beginner-share.png" />  
+
+<meta name="keywords" content="git learn git git tips git howto git branch git diff">
+<meta property="article:tag" content="git">
+<meta property="article:tag" content="learn git">
+<meta property="article:tag" content="git tips">
+<meta property="article:tag" content="git howto">
+<meta property="article:tag" content="git branch">
+<meta property="article:tag" content="git diff">
+
+<meta property="article:author" content="https://www.facebook.com/ochronus" />
+<meta property="fb:admins" content="591876541" />
+<meta property="fb:app_id" content="488453151244662" /> 
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:domain" content="ochronus.com">
+<meta name="twitter:site" content="@ochronus">
+
+<meta name="twitter:title" content="Git tips from the trenches">
+
+<meta name="twitter:url" content="https://ochronus.com/git-tips-from-the-trenches/">
+
+<meta name="twitter:description" content="Get better at git with some pro tips. Learn these tricks and rock your daily vcs routine!">
+
+<meta name="twitter:creator" content="@ochronus">
+
+    <meta name="twitter:image:src" content="https://ochronus.com/images/git-beginner-share.png">
+
+
+</head>
+
+<body>
+
+  <div class="navbar navbar-fixed-top">
+    <div class="container">
+        <img src="https://ochronus.com/images/zen_circle_logo.png" class="pull-left" style="border: none;" width="50" height="50" />
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+      <a class="navbar-brand" href="/">
+          
+          Ochronus</a>
+          
+      <div class="nav-collapse collapse navbar-responsive-collapse">
+        <ul class="nav navbar-nav pull-right hidden-print">
+          <li>
+            <a class="hidden-sm" title="Rólam" href="/about.html">
+              <i class="icon-user icon-large"></i>
+            </a>
+            <a class="visible-sm" title="Rólam" href="/about.html">
+              <i class="icon-user icon-large"></i>
+              About me
+            </a>
+          </li>
+          <li>
+            <a class="hidden-sm" href="http://feeds.feedburner.com/ochronus_online" title="Feed">
+              <i class="icon-rss icon-large"></i>
+            </a>
+            <a class="visible-sm" href="http://feeds.feedburner.com/ochronus_online" title="Feed">
+              <i class="icon-rss icon-large"></i>
+              RSS
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <script>is_index_page=false;</script>
+<section class="content" >
+  <section>
+  <h1>
+    <a href="/git-tips-from-the-trenches/">Git tips from the trenches</a>
+  </h1>
+<div class="social-likes" style="float:right;" data-counters="no" data-url="https://ochronus.com/git-tips-from-the-trenches/">
+    <div class="facebook" onclick="social_event('facebook', 'top');"   title="Share link on Facebook">Facebook</div>
+    <div class="twitter" onclick="social_event('twitter', 'top');"   data-via="ochronus" title="Share link on Twitter">Twitter</div>
+    <div class="plusone" onclick="social_event('google', 'top');"  title="Share link on Google+">Google+</div>
+</div>
+  <section class="byline">
+    February  1, 2014
+     by <a rel="author" href="https://plus.google.com/104319029501878849601/?rel=author">Csaba Okrona</a>
+  </section>
+ </section>
+
+  <p><img src="/images/git-beginner.jpg" align="left" width="300" height="225" alt="git tips" title="git tips" style="margin-right: 10px; margin-bottom: 5px;" /></p>
+
+<h2>After a few years with git everyone has his own bag o&#39; tricks - a collection of bash aliases, one liners and habits that make his daily work easier.</h2>
+
+<p>I&#39;ve gathered a handful of these with varying complexity hoping that it can give a boost to you. I will not cover git or VCS basics at all, I&#39;m assuming you&#39;re already a git-addict. </p>
+
+<p>So fire up your favorite text editor and bear with me.</p>
+
+<h2>Check which branches are merged</h2>
+
+<p>After a while if you branch a lot you&#39;ll se your git branch -a output is polluted like hell (if you havent&#39;t cleaned up). It all the more true if you&#39;re in a team. So, from time to time you&#39;ll do the Big Spring Cleaning only to find it hard to remember which branch you can delete and which you shouldn&#39;t. Well, just check out your mainline branch (usually master) and:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="nv">$ </span>git checkout master
+<span class="nv">$ </span>git branch --merged
+</code></pre></div>
+
+<p>to see all the branches that have already been merged to the current branch (master in this case).</p>
+
+<p>You can do the opposite of course:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="nv">$ </span>git branch --no-merged
+</code></pre></div>
+
+<p>How about deleting those obsolete branches right away?</p>
+
+<div class="highlight"><pre><code class="bash"><span class="nv">$ </span>git branch --merged | xargs git branch -d
+</code></pre></div>
+
+<p>Alternative: use GitHub&#39;s Pull request UI if you&#39;ve been a good sport and always used pull requests.</p>
+
+<h2>Find something in your entire git history</h2>
+
+<p>Sometimes you find yourself in the situation that you&#39;re looking for a specific line of code that you don&#39;t find with plain old grep - maybe someone deleted or changed it with a commit. You remember some parts of it but have no idea where and when you committed it. Fortunately git has your back on this. Let&#39;s fetch all commits ever then use git&#39;s internal grep subcommand to look for your string:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="nv">$ </span>git rev-list --all | xargs git grep <span class="s1">&#39;&lt;YOUR REGEX&gt;&#39;</span>
+<span class="nv">$ </span>git rev-list --all | xargs git grep -F <span class="s1">&#39;&lt;YOUR STRING&gt;&#39;</span>  <span class="c"># if you don&#39;t want to use regex</span>
+</code></pre></div>
+
+<h2>Fetch a file from another branch without changing your current branch</h2>
+
+<p>Local cherry-picking. Gotta love it. Imagine you&#39;re experimenting on your current branch and you suddenly realise you need a file from the oh-so-distant branch. What do you do? Yeah, you can stash, git checkout, etc. but there&#39;s an easier way to merge a single file in your current branch from another:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="nv">$ </span>git checkout &lt;OTHER_BRANCH&gt; -- path/to/file
+</code></pre></div>
+
+<h2>See which branches had the latest commits</h2>
+
+<p>Could also be useful for a spring cleaning - checking how &#39;old&#39; those yet unmerged branches are. Let&#39;s find out which branch hadn&#39;t been committed to in the last decade. Git has a nice subcommand, &#39;for-each-ref&#39; which can print information for each ref (duh) - the thing is that you can both customize the output format and sort! </p>
+
+<div class="highlight"><pre><code class="bash"><span class="nv">$ </span>git <span class="k">for</span>-each-ref --sort<span class="o">=</span>-committerdate --format<span class="o">=</span><span class="s1">&#39;%(refname:short) %(committerdate:short)&#39;</span>
+</code></pre></div>
+
+<p>It will output branches and tags, too. </p>
+
+<p>This deserves an alias, don&#39;t you think?</p>
+
+<div class="highlight"><pre><code class="bash"><span class="nv">$ </span>git config --global alias.springcleaning <span class="s2">&quot;for-each-ref --sort=-committerdate --format=&#39;%(refname:short) %(committerdate:short)&#39;&quot;</span>
+</code></pre></div>
+
+<h2>Making typos?</h2>
+
+<p>Git can autocorrect you.</p>
+
+<div class="highlight"><pre><code class="bash"><span class="nv">$ </span>git config --global help.autocorrect 1
+<span class="nv">$ </span>git dffi
+WARNING: You called a Git <span class="nb">command </span>named <span class="s1">&#39;dffi&#39;</span>, which does not exist.
+Continuing under the assumption that you meant <span class="s1">&#39;diff&#39;</span>
+in 0.1 seconds automatically...
+</code></pre></div>
+
+<h2>Autocomplete, anyone?</h2>
+
+<p>If you download <a href="https://raw.github.com/git/git/master/contrib/completion/git-completion.bash">this</a> file and modify your .bash_profile by adding:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="nb">source</span> ~/.git-completion.bash
+</code></pre></div>
+
+<p>Git will now autocomplete your partial command if you press TAB. Neat.</p>
+
+<h2>Hate remnant whitespace?</h2>
+
+<p>Let git strip it for you. Use the mighty .gitattributes file in the root of your project and say in it:</p>
+
+<div class="highlight"><pre><code class="bash">* <span class="nv">filter</span><span class="o">=</span>stripWhitespace
+</code></pre></div>
+
+<p>Or say you don&#39;t want this for all files (*), only scala sources:</p>
+
+<div class="highlight"><pre><code class="bash">*.scala <span class="nv">filter</span><span class="o">=</span>stripWhitespace
+</code></pre></div>
+
+<p>But the filter is not defined yet, so chop-chop:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="nv">$ </span>git config filter.stripWhitespace.clean strip_whitespace
+</code></pre></div>
+
+<p>(Actually there are two types of filters: clean and smudge. Clean runs right before pushing, smudge is run right after pulling)</p>
+
+<p>We still have to define what strip_whitespace is, so create a script on your PATH and of course make it executable:</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="c1">#!/usr/bin/env ruby</span>
+<span class="no">STDIN</span><span class="o">.</span><span class="n">readlines</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">line</span><span class="o">|</span>
+  <span class="nb">puts</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span>
+<span class="k">end</span>
+</code></pre></div>
+
+<p>You could also do this as a precommit hook, of course.</p>
+
+<h2>Recovering lost data</h2>
+
+<p>The rule of thumb is that if you lost data but committed/pushed it somewhere, you&#39;re probably able to recover it.
+There are basically two ways:</p>
+
+<h3>reflog</h3>
+
+<p>Any change you make that affects a branch is recorded in the reflog. See:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="nv">$ </span>git log -g
+commit be5de4244c1ef863e454e3fb7765c7e0559a6938
+Reflog: HEAD@<span class="o">{</span>0<span class="o">}</span> <span class="o">(</span>Csaba Okrona &lt;xxx@xx.xx&gt;<span class="o">)</span>
+Reflog message: checkout: moving from master to master
+Author: Robin Ward &lt;xxx@xx.xx&gt;
+Date:   Fri Nov 8 15:05:14 2013 -0500
+
+    FIX: Pinned posts were not displaying at the top of categories.
+</code></pre></div>
+
+<p>If you see your lost commit(s) there, just do a simple:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="nv">$ </span>git branch my_lost_data <span class="o">[</span>SHA-1<span class="o">]</span>
+</code></pre></div>
+
+<p>Where SHA-1 is the hash after the &#39;commit&#39; part.
+Now merge your lost data into your current branch:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="nv">$ </span>git merge my_lost_data
+</code></pre></div>
+
+<h3>git-fsck</h3>
+
+<div class="highlight"><pre><code class="bash"><span class="nv">$ </span>git fsck --full
+</code></pre></div>
+
+<p>This gives you all the objects that aren&#39;t referenced by any other object (orphans). You can fetch the SHA-1 hash and do the same dance as above.</p>
+
+<h2>A nicer, one-line log</h2>
+
+<p>Get a color-coded, one-line-per-commit log showing branches and tags:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="nv">$ </span>git log --oneline --decorate
+355459b Fix more typos in server locale
+b95e74b Merge pull request <span class="c">#1627 from awesomerobot/master</span>
+40aa62f adding highlight &amp; fade to linked topic
+15c29fd <span class="o">(</span>tag: v0.9.7.3, tag: latest-release<span class="o">)</span> Version bump to v0.9.7.3
+c753a3c We shouldn<span class="err">&#39;</span>t be matching on the <span class="sb">`</span>created_at<span class="sb">`</span> field. Causes tests to randomly fail.
+dbd2332 Public user profile page shows <span class="k">if </span>the user is suspended and why.
+</code></pre></div>
+
+<h2>Highlight word changes in diff</h2>
+
+<p>Bored of the full-line highlights? This only highlights the changed words, nicely inline. Try:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="nv">$ </span>git diff --word-diff
+</code></pre></div>
+
+<h2>A shorter, pro git status</h2>
+
+<p>Showing only the important things.</p>
+
+<div class="highlight"><pre><code class="bash"><span class="nv">$ </span>git status -sb
+<span class="c">## master...origin/master</span>
+?? _posts/2014-02-01-git-tips-from-the-trenches.md
+?? images/git-beginner-share.png
+?? images/git-beginner.jpg
+</code></pre></div>
+
+<h2>Bored of setting up tracking branches by hand?</h2>
+
+<p>Make git do this by default:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="nv">$ </span>git config --global push.default tracking
+</code></pre></div>
+
+<p>This sets up the link to the remote if it exists with the same branch name when you push.</p>
+
+<h2>Pull with rebase, not merge</h2>
+
+<p>To avoid those nasty merge commits all around.</p>
+
+<div class="highlight"><pre><code class="bash"><span class="nv">$ </span>git pull --rebase
+</code></pre></div>
+
+<p>Or do it automatically for any branch you&#39;d like:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="nv">$ </span>git config branch.master.rebase <span class="nb">true</span>
+</code></pre></div>
+
+<p>Or for all branches:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="nv">$ </span>git config --global branch.autosetuprebase always
+</code></pre></div>
+
+<h2>Find out which branch has a specific change</h2>
+
+<div class="highlight"><pre><code class="bash"><span class="nv">$ </span>git branch --contains <span class="o">[</span>SHA-1<span class="o">]</span>
+</code></pre></div>
+
+<p>If you want to include remote tracking branches, add &#39;-a&#39;</p>
+
+<h2>Check which changes from a branch are already upstream</h2>
+
+<div class="highlight"><pre><code class="bash"><span class="nv">$ </span>git cherry -v master
+</code></pre></div>
+
+<h2>Show the last commit with matching message</h2>
+
+<div class="highlight"><pre><code class="bash"><span class="nv">$ </span>git show :/regex
+</code></pre></div>
+
+<h2>Write notes for commits</h2>
+
+<div class="highlight"><pre><code class="bash"><span class="nv">$ </span>git notes add
+</code></pre></div>
+
+<p>These are only visible locally.</p>
+
+<h2>More cautious git blame</h2>
+
+<p>Before you play the blame game, make sure you check you&#39;re right with:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="nv">$ </span>git blame -w  <span class="c"># ignores white space</span>
+<span class="nv">$ </span>git blame -M  <span class="c"># ignores moving text</span>
+<span class="nv">$ </span>git blame -C  <span class="c"># ignores moving text into other files</span>
+</code></pre></div>
+
+<h2>Aliases make life easier</h2>
+
+<p>These go to the &#39;[alias]&#39; section of your .gitconfig</p>
+
+<div class="highlight"><pre><code class="bash"><span class="nv">ds</span> <span class="o">=</span> diff --staged      <span class="c"># git ds - diff your staged changes == review before committing.</span>
+<span class="nv">st</span> <span class="o">=</span> status -sb         <span class="c"># smarter status - include tag and branch info</span>
+<span class="nv">fup</span> <span class="o">=</span> log --since <span class="s1">&#39;1 day ago&#39;</span> --oneline --author &lt;YOUR_EMAIL&gt;  <span class="c"># I know what you did yesterday - great for follow-ups</span>
+<span class="nv">ls</span> <span class="o">=</span> log --pretty<span class="o">=</span>format:<span class="s2">&quot;%C(yellow)%h %C(blue)%ad%C(red)%d %C(reset)%s%C(green) [%cn]&quot;</span> --decorate --date<span class="o">=</span>short  <span class="c"># pretty one-line log with tags, branches and authors</span>
+<span class="nv">lsv</span> <span class="o">=</span> log --pretty<span class="o">=</span>format:<span class="s2">&quot;%C(yellow)%h %C(blue)%ad%C(red)%d %C(reset)%s%C(green) [%cn]&quot;</span> --decorate --date<span class="o">=</span>short --numstat    <span class="c"># a verbose ls, shows changed files too</span>
+
+<span class="c"># some resets without explanation</span>
+<span class="nv">r</span> <span class="o">=</span> reset
+<span class="nv">r1</span> <span class="o">=</span> reset HEAD^
+<span class="nv">r2</span> <span class="o">=</span> reset HEAD^^
+<span class="nv">rh</span> <span class="o">=</span> reset --hard
+<span class="nv">rh1</span> <span class="o">=</span> reset HEAD^ --hard
+
+<span class="c"># basic shortcuts</span>
+<span class="nv">cp</span> <span class="o">=</span> cherry-pick
+<span class="nv">st</span> <span class="o">=</span> status -s
+<span class="nv">cl</span> <span class="o">=</span> clone
+<span class="nv">ci</span> <span class="o">=</span> commit
+<span class="nv">co</span> <span class="o">=</span> checkout
+<span class="nv">br</span> <span class="o">=</span> branch 
+<span class="nv">diff</span> <span class="o">=</span> diff --word-diff
+<span class="nv">dc</span> <span class="o">=</span> diff --cached
+
+<span class="c"># stash shortcuts</span>
+<span class="nv">sl</span> <span class="o">=</span> stash list
+<span class="nv">sa</span> <span class="o">=</span> stash apply
+<span class="nv">ss</span> <span class="o">=</span> stash save
+
+<span class="nv">rh2</span> <span class="o">=</span> reset HEAD^^ --hard
+</code></pre></div>
+
+<p>Did I miss something? Tell me in comments ;)</p>
+
+  <div class="pull"></div>
+
+
+  <div class="social-likes" data-counters="no" data-url="https://ochronus.com/git-tips-from-the-trenches/">
+    <div class="facebook" onclick="social_event('facebook', 'bottom');"   title="Share link on Facebook">Facebook</div>
+    <div class="twitter" onclick="social_event('twitter', 'bottom');"   data-via="ochronus" title="Share link on Twitter">Twitter</div>
+    <div class="plusone" onclick="social_event('google', 'bottom');"  title="Share link on Google+">Google+</div>
+  </div>
+
+
+ <hr>
+  <div id="disqus_thread"></div>
+
+   <h3 id="related_posts_header">Other posts you may like</h3>
+ <div class="row">
+
+<div class="col col-lg-4">
+  <a href="/docker-primer-django/">A Docker primer – from zero to a running Django app</a>
+  </div>
+
+<div class="col col-lg-4">
+  <a href="/a-rubyists-confessions-on-python/">A Rubyist's confessions on Python</a>
+  </div>
+
+<div class="col col-lg-4">
+  <a href="/git-bisect-debug-with-git/">Git bisect - debug with git</a>
+  </div>
+
+<div class="col col-lg-4">
+  <a href="/steal-facebook-identity/">How to Steal a Facebook Identity</a>
+  </div>
+
+<div class="col col-lg-4">
+  <a href="/confessions-of-a-knowledge-junkie/">Confessions of a knowledge junkie</a>
+  </div>
+
+<div class="col col-lg-4">
+  <a href="/tracking-without-cookies/">Tracking without cookies</a>
+  </div>
+
+<div class="col col-lg-4">
+  <a href="/top-5-trends-in-software-development/">Top 5 Trends and Technologies in Software Development</a>
+  </div>
+
+<div class="col col-lg-4">
+  <a href="/top-technology-software-trends-2012-2013/">Top Technology and Software Trends – 2012 – 2013</a>
+  </div>
+
+<div class="col col-lg-4">
+  <a href="/user-tracking-http-redirect/">User tracking with HTTP Redirect</a>
+  </div>
+
+<div class="col col-lg-4">
+  <a href="/google-apple-know-wifi-passwords-world/">Google and Apple know most WiFi passwords in the world</a>
+  </div>
+
+</div>
+</section>
+
+  </div>
+
+  <div id="footer" class="hidden-print">
+    <section class="meta social-icons-footer"> 
+</section>
+    <section class="meta">
+      <div class="container">
+        <div class="row">
+          <div class="col col-lg-2 col-offset-1">
+            <a href="https://twitter.com/ochronus">
+              <i class="icon icon-twitter icon-4x"></i>
+              <div>@twitter</div>
+            </a>
+          </div>
+          <div class="col col-lg-2 next">
+            <a href="https://github.com/ochronus">
+              <i class="icon icon-github icon-4x"></i>
+              <div>
+                @github
+              </div>
+            </a>
+          </div>
+          <div class="col col-lg-2 next">
+            <a href="http://hu.linkedin.com/in/ochronus">
+              <i class="icon icon-linkedin icon-4x"></i>
+              <div>
+                @linkedin
+              </div>
+            </a>
+          </div>
+          
+          <div class="col col-lg-2 next">
+            <a href="https://www.facebook.com/ochronus">
+              <i class="icon icon-facebook icon-4x"></i>
+              <div>
+                @facebook
+              </div>
+            </a>
+          </div>
+          
+          <div class="col col-lg-2 next">
+            <a href="https://plus.google.com/u/0/104319029501878849601/">
+              <i class="icon icon-google-plus icon-4x"></i>
+              <div>
+                @google+
+              </div>
+            </a>
+          </div>
+          
+          
+        </div>
+      </div>
+    </section>
+
+
+  </div>
+
+  <script type="text/javascript">
+    function loadTracking() {
+        (function() {
+          var u=(("https:" == document.location.protocol) ? "https" : "http") + "://piwik.mostof.it/";
+          _paq.push(["setTrackerUrl", u+"piwik.php"]);
+          _paq.push(["setSiteId", "11"]);
+          var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
+          g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
+        })();
+
+          
+             if (window.addEventListener)
+              window.addEventListener('load', loadTracking, false);
+             else if (window.attachEvent)
+              window.attachEvent('onload', loadTracking);
+             else window.onload = loadTracking;
+           }
+  </script>
+
+
+
+<div id="fb-root"></div>
+
+            <script type='text/javascript'>
+             
+             function downloadJSAtOnload() {
+               var element = document.createElement('script');
+               element.src = 'https://ochronus.com/bundles/97190efc3d6b7b6e0e11ee48177d0eef.js';
+               element.async = true;
+               element.defer = true;
+               document.body.appendChild(element);
+             }
+
+             if (window.addEventListener)
+              window.addEventListener('load', downloadJSAtOnload, false);
+             else if (window.attachEvent)
+              window.attachEvent('onload', downloadJSAtOnload);
+             else window.onload = downloadJSAtOnload;
+            </script>
+
+            
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-33353382-1', 'ochronus.com');
+  ga('send', 'pageview');
+
+</script>
+</body>
+
+
+</html>

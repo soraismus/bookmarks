@@ -1,0 +1,50 @@
+A function is required that takes
+
+1. an http URL, 2. an inderterminate number of tags, 3. an optional filename-root
+
+and that pandocs the http resource into markdown and/or html (in order to access css and images).
+the resulting file(s) should have a useful naming scheme (see drbunsen.org) 
+
+filename format: 20110412_161319_R1.3_naming_searching_files.txt
+                 id string       tokens  keys ('naming', 'searching', 'files') file-extension
+
+`date +%Y%m%d_%H%M%S` -- determines the current date in yyyyMMdd_HHmmSS format.
+
+tokens
+------
+-R : records created like writings, pictures, etc
+-I : information collected like articles, bookmarks, etc
+(mine: -S: a bookmark (like a reference pointer or symlink to an outside reference, but not the reference itself;
+useful for saving space and time))
+-C : communication exchanged like email, IMs, etc
+.1 - important documents like backups, finance, taxes, etc
+.2 - writing (a subcategory of -R ?)
+.3 - design and visuals: art, scientific figures, seminar slides, etc
+.4 - life: recipes, productivity, vacations, etc
+.5 - commerce: transactions, returns, etc (mine: insurance)
+(mine: .6 - government: taxes, identification, papers, etc.)
+(mine: .7 - maintenance: cars, etc)
+(mine: .8 - career advancement or transition )
+(mine: .9 - sysadmin)
+(mine: .10 - software development of any kind)
+(mine: .11 - hardware)
+(mine: .12 - miscellaneous)
+[ capital letters indicate public or potentially public info, whereas lowercase tokens indicate personal information]
+
+# name CURRENT-FILENAME TOKEN-SEQUENCE KEY1 KEY2 ... KEYn
+name () {
+ CURRENT_NAME="$1"
+ TOKENS="$2"
+ DATE="$( date +%Y%m%d_%H%M%S )"
+ NEW_NAME="DATE"-"TOKENS"
+ shift
+ shift
+ while (( "$#" )); do
+   TAG="$1"
+   tag set "CURRENT_NAME" "$TAG"
+   NEW_NAME="NEW_NAME"-"$TAG"
+	 shift
+ done
+ mv "CURRENT_NAME" "NEW_NAME"
+ tag
+} 
